@@ -42,7 +42,7 @@ def solve_graph_sequence(degre_list: list, graph: dict):
     if not(len(degre_list) > 0):
         return False
 
-    if sum(degre_list) % 2 != 0 or degre_list[0].degre > len(degre_list):
+    if sum(degre_list) % 2 != 0 or degre_list[0].degre >= len(degre_list):
         return False
     
     pivot_degre = degre_list.pop(0)
@@ -53,7 +53,7 @@ def solve_graph_sequence(degre_list: list, graph: dict):
         graph[degre_list[i].node_index].append(pivot_degre.node_index)
         graph[pivot_degre.node_index].append(degre_list[i].node_index)
 
-    degre_list.sort()
+    degre_list.sort(reverse=True)
 
     while len(degre_list) > 0 and degre_list[len(degre_list) - 1].degre == 0:
         degre_list.pop(len(degre_list) - 1)
@@ -65,6 +65,7 @@ def solve_graph_sequence(degre_list: list, graph: dict):
 
 def print_graph(graph: dict):
     for i in graph.keys():
+        graph[i].sort()
         out = " ".join([str(i) for i in graph[i]])
         print(out)
 
@@ -72,8 +73,10 @@ def main():
     n = int(input())
     graph = make_graph(n)
     degre_list = make_degre_list(n)
-    solve_graph_sequence(degre_list, graph)
-    print_graph(graph)
+    if not(solve_graph_sequence(degre_list, graph)):
+        print("Não é sequência gráfica!")
+    else:
+        print_graph(graph)
 
 if "__main__" == __name__:
     main()
