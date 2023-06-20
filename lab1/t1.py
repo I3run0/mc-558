@@ -40,7 +40,7 @@ def make_degre_list(n: int):
 def solve_graph_sequence(degre_list: list, graph: dict):
     
     if not(len(degre_list) > 0):
-        return False
+        return True
 
     if sum(degre_list) % 2 != 0 or degre_list[0].degre >= len(degre_list):
         return False
@@ -54,7 +54,6 @@ def solve_graph_sequence(degre_list: list, graph: dict):
         graph[pivot_degre.node_index].append(degre_list[i].node_index)
 
     degre_list.sort(reverse=True)
-
     while len(degre_list) > 0 and degre_list[len(degre_list) - 1].degre == 0:
         degre_list.pop(len(degre_list) - 1)
 
